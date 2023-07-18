@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -38,7 +41,12 @@ const Input = styled.input`
   min-width: 40%;
   margin: 20px 10px 0px 0px;
   padding: 10px;
+  border: 1px solid #ccc; /* Add a border to the input */
+  border-radius: 4px; /* Add rounded corners */
+  outline: none; /* Remove the default focus outline */
+  font-size: 16px; /* Set a font size */
 `;
+
 
 const Agreement = styled.span`
   font-size: 12px;
@@ -55,23 +63,66 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const navigate= useNavigate();
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+  
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      // Replace "https://your-backend-server-url/api/register" with your actual backend endpoint for user registration
+      await axios.post("https://server-vercel-production.up.railway.app/api/auth/register", formData);
+      navigate('/');
+      // Handle successful registration, e.g., redirect to a success page or show a success message
+      console.log("User registered successfully!");
+    } catch (error) {
+      // Handle registration error, e.g., display an error message
+      console.error("Error during user registration:", error);
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+        <Form onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            name="username" // Add the name attribute for capturing the input value in the state
+            placeholder="Username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          <Input
+            type="email"
+            name="email" // Add the name attribute for capturing the input value in the state
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <Input
+            type="password"
+            name="password" // Add the name attribute for capturing the input value in the state
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          {/* ... your other inputs ... */}
           <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
+            {/* ... your existing Agreement text ... */}
           </Agreement>
-          <Button>CREATE</Button>
+          <Button type="submit">CREATE</Button>
         </Form>
+
       </Wrapper>
     </Container>
   );

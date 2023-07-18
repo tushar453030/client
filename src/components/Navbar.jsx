@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import {Search, ShoppingCartOutlined} from "@material-ui/icons";
 import { Badge } from '@material-ui/core';
 import {mobile} from "../responsive";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { logout } from '../redux/apiCalls';
 
 const Container = styled.div`
     height: 60px;
@@ -68,7 +70,20 @@ const MenuItem = styled.div`
   ${mobile({fontSize: "12px", marginLeft: "10px"})}
 `
 const Navbar = () => {
-  const quantity = useSelector(state=>state.cart.quantity)
+  const quantity = useSelector(state=>state.cart.quantity);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const navigate = useNavigate(); 
+  const dispatch= useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+  };
+  
+  
+
+
   return (
     <Container>
       <Wrapper>
@@ -85,8 +100,19 @@ const Navbar = () => {
 
 
         <Right>
-        <Link to="/register" style={{ textDecoration: 'none' }}><MenuItem>REGISTER</MenuItem></Link>
-          <Link to="/login" style={{ textDecoration: 'none' }}><MenuItem>SIGN IN</MenuItem></Link>
+        {currentUser ? (
+            <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
+          ) : (
+            <>
+              <Link to="/register" style={{ textDecoration: 'none' }}>
+                <MenuItem>REGISTER</MenuItem>
+              </Link>
+              <Link to="/login" style={{ textDecoration: 'none' }}>
+                <MenuItem>SIGN IN</MenuItem>
+              </Link>
+            </>
+          )}
+
 
           <Link to="/cart" >
           <MenuItem>
