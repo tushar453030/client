@@ -5,11 +5,15 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useNavigate } from 'react-router-dom';
+import { deleteProduct } from "../redux/cartRedux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {FaTrashAlt} from "react-icons/fa";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -164,9 +168,14 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onToken = (token) => {
     setStripeToken(token);
+  };
+
+  const handleDeleteProduct = (index) => {
+    dispatch(deleteProduct(index));
   };
 
   useEffect(() => {
@@ -202,32 +211,31 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-          {cart.products.map((product) => (
-              <Product>
-                <ProductDetail>
-                  <Image src={product.img} />
-                  <Details>
-                    <ProductName>
-                      <b>Product:</b> {product.title}
-                    </ProductName>
-                    <ProductId>
-                      <b>ID:</b> {product._id}
-                    </ProductId>
-                    <ProductColor color={product.color} />
-                  </Details>
-                </ProductDetail>
-                <PriceDetail>
-                  <ProductAmountContainer>
-                    <Add />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove />
-                  </ProductAmountContainer>
-                  <ProductPrice>
-                    $ {product.price * product.quantity}
-                  </ProductPrice>
-                </PriceDetail>
-              </Product>
-            ))}
+          {cart.products.map((product,index) => (
+            <Product key={index}>
+              <ProductDetail>
+                <Image src={product.img} alt={product.title} />
+                <Details>
+                  <ProductName>
+                    <b>Product:</b> {product.title}
+                  </ProductName>
+                  <ProductId>
+                    <b>ID:</b> {product._id}
+                  </ProductId>
+                  <ProductColor color={product.color} />
+                </Details>
+              </ProductDetail>
+              <PriceDetail>
+                <ProductAmountContainer>
+                  
+                  <ProductAmount>{product.quantity}</ProductAmount>
+                  
+                  <FaTrashAlt style={{ cursor: 'pointer' }} onClick={() => handleDeleteProduct(index)}/>
+                </ProductAmountContainer>
+                <ProductPrice>${product.price * product.quantity}</ProductPrice>
+              </PriceDetail>
+            </Product>
+          ))}
             <Hr />
           </Info>
           <Summary>
