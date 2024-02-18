@@ -20,8 +20,8 @@ export const Products = ({ cat, filters, sort }) => {
       try {
         const res = await axios.get(
           cat
-            ? `https://vercel.com/tushar453030/server-vercel-psk6/api/products?category=${cat}`
-            : 'https://vercel.com/tushar453030/server-vercel-psk6/api/products'
+            ? `https://server-vercel-psk6-nr0ud6nar-tushar453030.vercel.app/api/products?category=${cat}`
+            : 'https://server-vercel-psk6-nr0ud6nar-tushar453030.vercel.app/api/products'
         )
 
         setProducts(res.data)

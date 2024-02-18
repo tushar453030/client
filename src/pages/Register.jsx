@@ -79,7 +79,7 @@ const Register = () => {
     try {
       // Replace "https://your-backend-server-url/api/register" with your actual backend endpoint for user registration
       await axios.post(
-        'https://vercel.com/tushar453030/server-vercel-psk6/api/auth/register',
+        'https://server-vercel-psk6-nr0ud6nar-tushar453030.vercel.app/api/auth/register',
         formData
       )
       navigate('/')
