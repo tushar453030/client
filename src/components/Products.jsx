@@ -2,35 +2,34 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { popularProducts } from '../data'
 import { Product } from './Product'
-import axios from "axios"
+import axios from 'axios'
 
-
-const Container= styled.div`
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+const Container = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `
 
 export const Products = ({ cat, filters, sort }) => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [products, setProducts] = useState([])
+  const [filteredProducts, setFilteredProducts] = useState([])
 
   useEffect(() => {
     const getProducts = async () => {
       try {
         const res = await axios.get(
           cat
-            ? `https://server-vercel-production.up.railway.app/api/products?category=${cat}`
-            : "https://server-vercel-production.up.railway.app/api/products"
-        );
-        
-        setProducts(res.data);
+            ? `https://vercel.com/tushar453030/server-vercel-psk6/api/products?category=${cat}`
+            : 'https://vercel.com/tushar453030/server-vercel-psk6/api/products'
+        )
+
+        setProducts(res.data)
         console.log(res)
       } catch (err) {}
-    };
-    getProducts();
-  }, [cat]);
+    }
+    getProducts()
+  }, [cat])
 
   useEffect(() => {
     cat &&
@@ -40,32 +39,24 @@ export const Products = ({ cat, filters, sort }) => {
             item[key].includes(value)
           )
         )
-      );
-  }, [products, cat, filters]);
-
-
+      )
+  }, [products, cat, filters])
 
   useEffect(() => {
-    if (sort === "newest") {
+    if (sort === 'newest') {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => a.createdAt - b.createdAt)
-      );
-    } else if (sort === "asc") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.price - b.price)
-      );
+      )
+    } else if (sort === 'asc') {
+      setFilteredProducts((prev) => [...prev].sort((a, b) => a.price - b.price))
     } else {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => b.price - a.price)
-      );
+      setFilteredProducts((prev) => [...prev].sort((a, b) => b.price - a.price))
     }
-  }, [sort]);
-
-  
+  }, [sort])
 
   return (
     <Container>
-         {cat
+      {cat
         ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
         : products
             .slice(0, 8)
