@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Search, ShoppingCartOutlined } from '@material-ui/icons'
+import { ShoppingCartOutlined } from '@material-ui/icons'
 import { Badge } from '@material-ui/core'
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+
 import { logout } from '../redux/apiCalls'
 
 const Container = styled.div`
@@ -32,17 +32,6 @@ const Language = styled.span`
   color: black;
   cursor: pointer;
   ${mobile({ display: 'none' })}
-`
-const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
-  display: flex;
-  align-items: center;
-  margin-left: 25px;
-  padding: 5px;
-`
-const Input = styled.input`
-  border: none;
-  ${mobile({ width: '50px' })}
 `
 
 const Center = styled.div`
@@ -72,9 +61,9 @@ const MenuItem = styled.div`
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity)
   const currentUser = useSelector((state) => state.user.currentUser)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isFetching, error } = useSelector((state) => state.user)
+  // const { isFetching, error } = useSelector((state) => state.user)
 
   const handleLogout = (e) => {
     e.preventDefault()
