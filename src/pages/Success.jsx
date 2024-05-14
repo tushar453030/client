@@ -2,8 +2,8 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 
 const Success = () => {
-  const { data } = useLocation()
-  console.log(data)
+  const { state } = useLocation()
+  console.log(state)
   return <div>Success</div>
 }
 
