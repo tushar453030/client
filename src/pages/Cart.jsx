@@ -170,7 +170,7 @@ const Cart = () => {
       try {
         const res = await userRequest.post('/checkout/payment', {
           tokenId: stripeToken.id,
-          amount: 500,
+          amount: cart.total,
         })
         navigate('/success', {
           state: { stripeData: res.data },
