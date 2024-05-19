@@ -75,13 +75,21 @@ const Navbar = () => {
       <Wrapper>
         <Left>
           <Link to='/' style={{ textDecoration: 'none' }}>
-            <Language>Shope2nd</Language>
+            <Center>
+              <Logo>Shop2nd</Logo>
+            </Center>
           </Link>
         </Left>
 
-        <Link to='/' style={{ textDecoration: 'none' }}>
+        {/* <Link to='/' style={{ textDecoration: 'none' }}>
           <Center>
             <Logo>Shop2nd</Logo>
+          </Center>
+        </Link> */}
+
+        <Link to='/compare' style={{ textDecoration: 'none' }}>
+          <Center>
+            <Logo>Compare</Logo>
           </Center>
         </Link>
 
