@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const BASE_URL =
-  'https://server-vercel-psk6-tzzq-qo1bv23bc-tushar453030s-projects.vercel.app/api/'
+  'https://server-vercel-psk6-tzzq-99lx87x6b-tushar453030s-projects.vercel.app/api/'
 
 const userStorageData = JSON.parse(localStorage.getItem('persist:root'))
 const TOKEN =

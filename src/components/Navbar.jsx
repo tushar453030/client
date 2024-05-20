@@ -43,6 +43,18 @@ const Logo = styled.h1`
   font-weight: bold;
   ${mobile({ fontSize: '24px' })}
 `
+
+const LogoCompare = styled.h1`
+  font-weight: bold;
+  font-family: 'Arial, sans-serif'; // Insert your desired font family here
+  ${mobile({ fontSize: '24px' })}
+`
+
+const Subtitle = styled.span`
+  font-weight: normal;
+  font-size: 0.5em; // Adjust the size relative to the Logo
+`
+
 const Right = styled.div`
   flex: 1;
   display: flex;
@@ -89,7 +101,9 @@ const Navbar = () => {
 
         <Link to='/compare' style={{ textDecoration: 'none' }}>
           <Center>
-            <Logo>Compare</Logo>
+            <LogoCompare>
+              Compare<Subtitle>Powered by Gemini</Subtitle>
+            </LogoCompare>
           </Center>
         </Link>
 
