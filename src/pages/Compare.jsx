@@ -131,9 +131,9 @@ const Compare = () => {
     const getProducts = async () => {
       try {
         const res = await axios.get(
-          'https://server-vercel-psk6-nr0ud6nar-tushar453030.vercel.app/api/products'
+          'https://server-vercel-psk6-tzzq-qo1bv23bc-tushar453030s-projects.vercel.app/api/products'
         )
-        //const res = await axios.get('http://localhost:5000/api/products')
+        // const res = await axios.get('http://localhost:5000/api/products')
         setProducts(res.data)
         console.log(res)
       } catch (err) {
@@ -164,7 +164,7 @@ const Compare = () => {
       //   body
       // )
       const response = await axios.post(
-        'https://server-vercel-psk6-nr0ud6nar-tushar453030.vercel.app/api/gimini/sendGemini',
+        'https://server-vercel-psk6-tzzq-qo1bv23bc-tushar453030s-projects.vercel.app/api/gimini/sendGemini',
         body
       )
       setComparisonResult(response.data)
