@@ -126,6 +126,7 @@ const Compare = () => {
   const [products, setProducts] = useState([])
   const [selectedProducts, setSelectedProducts] = useState([null, null])
   const [comparisonResult, setComparisonResult] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const getProducts = async () => {
@@ -154,6 +155,7 @@ const Compare = () => {
   }
 
   const handleCompare = async () => {
+    setLoading(true)
     const body = {
       products: selectedProducts.map((p) => ({ desc: p.desc })),
     }
@@ -168,6 +170,7 @@ const Compare = () => {
         body
       )
       setComparisonResult(response.data)
+      setLoading(false)
     } catch (error) {
       console.error('Error comparing products:', error)
     }
@@ -224,9 +227,8 @@ const Compare = () => {
           onClick={handleCompare}
           disabled={!selectedProducts[0] || !selectedProducts[1]}
         >
-          Compare Them
+          {loading ? 'Loading...' : 'Compare Them'}
         </Button>
-
         {comparisonResult && (
           <ResultContainer>
             <h1>Result</h1>
