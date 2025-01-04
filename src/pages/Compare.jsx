@@ -4,9 +4,9 @@ import axios from 'axios'
 import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
-import Newsletter from '../components/Newsletter'
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom'
+import { ClipLoader } from 'react-spinners'
 
 const Container = styled.div``
 
@@ -39,18 +39,6 @@ const ProductsList = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-`
-
-const ProductButton = styled.button`
-  margin: 5px;
-  padding: 10px;
-  cursor: pointer;
-  background-color: teal;
-  color: white;
-  border: none;
-  &:hover {
-    background-color: #005f5f;
-  }
 `
 
 const Button = styled.button`
@@ -120,6 +108,14 @@ const TopButton = styled.button`
   background-color: ${(props) =>
     props.type === 'filled' ? 'black' : 'transparent'};
   color: ${(props) => props.type === 'filled' && 'white'};
+`
+
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px; /* Adjust height as needed */
 `
 
 const Compare = () => {
@@ -237,19 +233,24 @@ const Compare = () => {
         )}
 
         <ProductsList>
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              onClick={() => handleProductSelect(product)}
-            >
-              <ProductImage src={product.img} alt={product.name} />
-              <h3>{product.title}</h3>
-              <p>{product.desc}</p>
-            </ProductCard>
-          ))}
+          {products.length === 0 ? (
+            <LoaderContainer>
+              <ClipLoader size={50} color='#3498db' /> {/* Loader icon */}
+            </LoaderContainer>
+          ) : (
+            products.map((product) => (
+              <ProductCard
+                key={product.id}
+                onClick={() => handleProductSelect(product)}
+              >
+                <ProductImage src={product.img} alt={product.name} />
+                <h3>{product.title}</h3>
+                <p>{product.desc}</p>
+              </ProductCard>
+            ))
+          )}
         </ProductsList>
       </Wrapper>
-      <Newsletter />
       <Footer />
     </Container>
   )

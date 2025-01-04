@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Product } from './Product'
 import axios from 'axios'
+import { ClipLoader } from 'react-spinners'
 
 const Container = styled.div`
   padding: 20px;
@@ -9,13 +10,22 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
 `
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px; /* Adjust height as needed */
+`
 
 export const Products = ({ cat, filters, sort }) => {
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const getProducts = async () => {
+      setLoading(true)
       try {
         const res = await axios.get(
           cat
@@ -25,7 +35,11 @@ export const Products = ({ cat, filters, sort }) => {
 
         setProducts(res.data)
         console.log(res)
-      } catch (err) {}
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
     }
     getProducts()
   }, [cat])
@@ -55,11 +69,17 @@ export const Products = ({ cat, filters, sort }) => {
 
   return (
     <Container>
-      {cat
-        ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
-        : products
-            .slice(0, 8)
-            .map((item) => <Product item={item} key={item.id} />)}
+      {loading ? (
+        <LoaderContainer>
+          <ClipLoader size={50} color='#3498db' /> {/* Loader icon */}
+        </LoaderContainer>
+      ) : cat ? (
+        filteredProducts.map((item) => <Product item={item} key={item.id} />)
+      ) : (
+        products
+          .slice(0, 8)
+          .map((item) => <Product item={item} key={item.id} />)
+      )}
     </Container>
   )
 }
