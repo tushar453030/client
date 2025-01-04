@@ -27,13 +27,6 @@ const Left = styled.div`
   align-items: center;
 `
 
-const Language = styled.span`
-  font-size: 14px;
-  color: black;
-  cursor: pointer;
-  ${mobile({ display: 'none' })}
-`
-
 const Center = styled.div`
   flex: 1;
   text-align: center;
